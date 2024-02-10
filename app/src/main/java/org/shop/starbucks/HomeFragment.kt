@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import org.shop.starbucks.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -22,6 +23,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val homeData = context?.readData() ?: return
 
+        binding.appbarTitleTextView.text =
+            resources.getString(R.string.appbar_title_text, homeData.user.nickname)
+
+        binding.startCountTextView.text = resources.getString(
+            R.string.appbar_star_title,
+            homeData.user.starCount,
+            homeData.user.totalCount
+        )
+
+        binding.appbarProgressBar.progress = homeData.user.starCount
+        binding.appbarProgressBar.max = homeData.user.totalCount
+
+        Glide.with(binding.appbarImageView).load(homeData.appbarImage).into(binding.appbarImageView)
     }
 }
