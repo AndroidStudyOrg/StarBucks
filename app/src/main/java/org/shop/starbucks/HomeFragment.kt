@@ -38,5 +38,10 @@ class HomeFragment : Fragment() {
         binding.appbarProgressBar.max = homeData.user.totalCount
 
         Glide.with(binding.appbarImageView).load(homeData.appbarImage).into(binding.appbarImageView)
+
+        binding.recommendMenuList.menuLayout.addView(MenuView(context = requireContext()).apply {
+            setTitle("디카페인 카페라떼")
+            setImageUrl("https://picsum.photos/100/100")
+        })
     }
 }
