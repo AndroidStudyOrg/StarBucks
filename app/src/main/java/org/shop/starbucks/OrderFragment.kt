@@ -1,6 +1,7 @@
 package org.shop.starbucks
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.shop.starbucks.data.Menu
 import org.shop.starbucks.databinding.FragmentOrderBinding
+import kotlin.math.abs
 
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
@@ -34,6 +36,15 @@ class OrderFragment : Fragment() {
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = menuAdapter
+        }
+
+        binding.appbarLayout.addOnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val seekPosition = abs(verticalOffset) / appBarLayout.totalScrollRange.toFloat()
+            binding.motionLayout.progress = seekPosition
+            Log.e(
+                "OrderFragment - appbarLayout",
+                "appbar: ${appBarLayout.totalScrollRange}\t verticalOffset: $verticalOffset"
+            )
         }
     }
 }
